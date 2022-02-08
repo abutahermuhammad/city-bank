@@ -64,13 +64,17 @@ const sorter = (data) => {
 }
 
 const cardDistribution = (d) => {
-    let results = [];
+    /**
+     * This function first loop through given data and serially generates 
+     * Card numbers, Gifts and add priority number without any change and 
+     * store every new item in the 'results' stack. Afterwords the sort funtion 
+     * sort the previously stored results stack and return the sorted data.
+     * Know i'm looping through the sorted data stack and storing the actual data to 
+     * the finalResult stack according to the sorted data index.
+     */
 
-    // If there is no data in the array.
-    // if (d.length > 0) return;
-
-    // Return error if data is not object.
-    // if (typeof d === "object") return;
+    let results = [];  // This variable contains all the ganerated datas without sort.
+    let finalResult = [];  // This variable contains sorted final datas.
 
     // Returns error when given array object doesn't fulfill specific object keys.
     d.forEach( (v, i) => {
@@ -93,25 +97,30 @@ const cardDistribution = (d) => {
         results.push(item);
     });
 
+    // Sorting Data
+    let sortResults = sorter(results);
 
-    let finalData = sorter(results);
+    sortResults.forEach(sortResult=> {
+        results.forEach(result=> {
+            if (sortResult[0] === result.cardNumber) {
+            // console.log('A: ', result);
+            finalResult.push(result);
+            }
+        });
+    });
 
-    // console.log(d)
-    return finalData;
+    // console.log(results)
+    return finalResult;
 }
 
 
-// Input Data
-const inputData = [
-    { name: "Mr Rashed", birthYear: 1999, currentYear: 2022, district: "Dhaka", postNo: 1200, priority: 2 },
-    { name: "Mr Raju", birthYear: 1995, currentYear: 2022, district: "Rajshahi", postNo: 1211, priority: 1 },
-    { name: "Abu Taher Muhammad", birthYear: 1999, currentYear: 2022, district: "Sylhet", postNo: 3100, priority: 1 }
-];
+// Dummy Input Model Data
+// const inputData = [
+//     { name: "Mr Rashed", birthYear: 1999, currentYear: 2022, district: "Dhaka", postNo: 1200, priority: 2 },
+//     { name: "Mr Raju", birthYear: 1995, currentYear: 2022, district: "Rajshahi", postNo: 1211, priority: 1 },
+//     { name: "Abu Taher Muhammad", birthYear: 1999, currentYear: 2022, district: "Sylhet", postNo: 3100, priority: 1 }
+// ];
 
-const finalResult = [
-    { cardNumber: 'RA22321995000002', gift: 'R', priority: 1},
-    { cardNumber: 'DH22121999000001', gift: 'W', priority: 2}
-];
 
 
 // cardDistribution(inputData)
